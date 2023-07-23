@@ -1,14 +1,34 @@
-bda.MutualFriends
-bigdata.PageRankDriver
-shortpath.Dijkstra
-bda.MyMaxMin
-
 
 hdfs namenode -format
 hdfs datanode -format
 start-all.cmd
 
+for wordcount:
 hdfs dfs -mkdir /dir
 hdfs dfs -copyFromLocal C:\hadoop-2.7.6\input.txt /dir/
-yarn jar C:\hadoop-2.7.6\<name>.jar <classname> /dir /odir
+yarn jar C:\hadoop-2.7.6\share\hadoop\mapreduce\hadoop-mapreduce-2.7.6.jar wordcount /dir /odir
+hdfs dfs -cat /odir/*
+
+for weather:
+hdfs dfs -mkdir /dir
+hdfs dfs -copyFromLocal C:\hadoop-2.7.6\input.txt /dir/
+yarn jar C:\hadoop-2.7.6\bda.jar bda.MyMaxMin /dir /odir
+hdfs dfs -cat /odir/*
+
+for Shortest path:
+hdfs dfs -mkdir /dir
+hdfs dfs -copyFromLocal C:\hadoop-2.7.6\input.txt /dir/
+yarn jar C:\hadoop-2.7.6\shortpath.jar shortpath.Dijkstra /dir /odir
+hdfs dfs -cat /odir/*
+
+for Friends of Friends:
+hdfs dfs -mkdir /dir
+hdfs dfs -copyFromLocal C:\hadoop-2.7.6\input.txt /dir/
+yarn jar C:\hadoop-2.7.6\bda.jar bda.MutualFriends /dir /odir
+hdfs dfs -cat /odir/*
+
+for Pagerank:
+hdfs dfs -mkdir /dir
+hdfs dfs -copyFromLocal C:\hadoop-2.7.6\input.txt /dir/
+yarn jar C:\hadoop-2.7.6\bigdata.jar bigdata.PageRankDriver /dir /odir
 hdfs dfs -cat /odir/*
